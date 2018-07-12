@@ -16,5 +16,6 @@ public class Order implements OrderI{
 
     public void performAction(Query query) {
         //query.getComperator();
+        System.out.println("performing action on Query: " + query);
     }
 }

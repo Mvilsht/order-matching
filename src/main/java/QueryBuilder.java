@@ -1,10 +1,5 @@
-public interface QueryBuilder {
+/*
+public abstract class QueryBuilder implements QueryBuilderI {
 
-    public void buildQueryName();
-
-    public void buildQueryPattern();
-
-    public void buildQueryAction();;
-
-    public Query getQuery();
 }
+*/

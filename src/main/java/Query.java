@@ -1,36 +1,45 @@
 public class Query implements QueryPlanI{
 
-    private String name;
-    private String pattern;
-    private String action;
+    private String qParamName;
+    private String qPattern;
+    private String qAction;
 
-//    public Query(String name, String pattern, String action) {
-//        this.name = name;
-//        this.pattern = pattern;
-//        this.action = action;
+//    public Query(String qParamName, String qPattern, String qAction) {
+//        this.qParamName = qParamName;
+//        this.qPattern = qPattern;
+//        this.qAction = qAction;
 //    }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setQParamName(String qParamName) {
+        this.qParamName = qParamName;
     }
 
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
+    public void setQPattern(String qPattern) {
+        this.qPattern = qPattern;
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    public void setQAction(String qAction) {
+        this.qAction = qAction;
     }
 
-    public String getName() {
-        return name;
+    public String getQParamName() {
+        return qParamName;
     }
 
-    public String getPattern() {
-        return pattern;
+    public String getqPattern() {
+        return qPattern;
     }
 
-    public String getAction() {
-        return action;
+    public String getqAction() {
+        return qAction;
+    }
+
+    @Override
+    public String toString() {
+        return "Query{" +
+                "qParamName='" + qParamName + '\'' +
+                ", qPattern='" + qPattern + '\'' +
+                ", qAction='" + qAction + '\'' +
+                '}';
     }
 }

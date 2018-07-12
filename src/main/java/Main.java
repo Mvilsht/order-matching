@@ -10,12 +10,32 @@ public class Main {
         final MapperI myJacksonMAPPER = new JacksonMapper();
         Order order = myJacksonMAPPER.readValue(orderStringJson , Order.class);
 
-        Query query = new Query();
+        //Query query = new Query();
 
-        int run = new ApiRunner(order, query).run();
+        // TODO also implement using factory
+        QueryBuilderI queryBuilder = new ContainQueryBuilder();
+        //int run = new ApiRunner(order, query).run();
+
+        QueryEngineer queryEngineer = new QueryEngineer(queryBuilder);
+        queryEngineer.makeQuery();
+        Query firstContainsQuery = queryEngineer.getQuery();
+
+        System.out.println("Query BUIDL");
+
+        System.out.println("Query for Param Name: " + firstContainsQuery.getQParamName());
+        System.out.println("Query for Pattern Name: " + firstContainsQuery.getqPattern());
+        System.out.println("Query for Action Name: " + firstContainsQuery.getqAction());
+
+        order.performAction(firstContainsQuery);
+
+        //get Order according to Order Json
+        //use QueryBuilderI to build Query
+
+        //query_action - should be the comparator - telling us how to compareTo(orderFieldName, field_pattern)
+        //build query made of: field_name, field_pattern/value, query_action
 
 
-        System.exit(run);
+        //System.exit(run);
 }
 
 }
