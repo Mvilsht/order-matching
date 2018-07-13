@@ -18,8 +18,7 @@ public class ContainQueryBuilder implements QueryBuilderI{
 
     @Override
     public void buildQueryAction() {
-        //build specific comparator
-        query.setQAction(QACTION.CONTAINS);   // TODO here type specific comparator?
+        query.setQAction(QACTION.CONTAINS);
     }
 
     @Override
