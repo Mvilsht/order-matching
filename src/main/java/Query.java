@@ -2,7 +2,7 @@ public class Query implements QueryPlanI{
 
     private String qParamName;
     private String qPattern;
-    private String qAction;
+    private QACTION qAction;
 
 //    public Query(String qParamName, String qPattern, String qAction) {
 //        this.qParamName = qParamName;
@@ -18,9 +18,10 @@ public class Query implements QueryPlanI{
         this.qPattern = qPattern;
     }
 
-    public void setQAction(String qAction) {
+    public void setQAction(QACTION qAction) {
         this.qAction = qAction;
     }
+
 
     public String getQParamName() {
         return qParamName;
@@ -30,7 +31,7 @@ public class Query implements QueryPlanI{
         return qPattern;
     }
 
-    public String getqAction() {
+    public QACTION getqAction() {
         return qAction;
     }
 

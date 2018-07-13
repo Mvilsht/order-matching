@@ -1,6 +1,6 @@
 public interface OrderI {
 
-    void performAction(Query query);
+    boolean performActionIsMatch(Query2 query) throws Exception;
 }
 
 

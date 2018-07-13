@@ -1,41 +1,46 @@
-public class Main {
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
-    public static String orderStringJson = "{\n" +
-            "  \"total_price\": \"193.5\",\n" +
-            "  \"email\": \"SEAN@gmail.com\"\n" +
-            "}";
+public class Main {
+//    public static String orderStringJson = "{\n" +
+//            "  \"total_price\": \"193.5\",\n" +
+//            "  \"email\": \"SEAN@gmail.com\"\n" +
+//            "}";
 
     public static void main(String[] args) throws Exception {
 
-        final MapperI myJacksonMAPPER = new JacksonMapper();
-        Order order = myJacksonMAPPER.readValue(orderStringJson , Order.class);
+        //todo try this way!! test which is more flexible
+        Query2 query2 = new Query2.Builder(QACTION.CONTAINS).setParam("email").setPattern("@gmail.com").build();
+        System.out.println(query2);
 
-        //Query query = new Query();
+        Query2 query3 = new Query2.Builder(QACTION.GT).setParam("total_price").setPattern("193.4").build();
+        System.out.println(query3);
 
-        // TODO also implement using factory
-        QueryBuilderI queryBuilder = new ContainQueryBuilder();
-        //int run = new ApiRunner(order, query).run();
+        List<Query2> query2List = new ArrayList<>();
 
-        QueryEngineer queryEngineer = new QueryEngineer(queryBuilder);
-        queryEngineer.makeQuery();
-        Query firstContainsQuery = queryEngineer.getQuery();
-
-        System.out.println("Query BUIDL");
-
-        System.out.println("Query for Param Name: " + firstContainsQuery.getQParamName());
-        System.out.println("Query for Pattern Name: " + firstContainsQuery.getqPattern());
-        System.out.println("Query for Action Name: " + firstContainsQuery.getqAction());
-
-        order.performAction(firstContainsQuery);
-
-        //get Order according to Order Json
-        //use QueryBuilderI to build Query
-
-        //query_action - should be the comparator - telling us how to compareTo(orderFieldName, field_pattern)
-        //build query made of: field_name, field_pattern/value, query_action
+        query2List.add(query2);
+        query2List.add(query3);
 
 
-        //System.exit(run);
+//        QueryBuilderI queryBuilder = new ContainQueryBuilder();
+//        QueryEngineer queryEngineer = new QueryEngineer(queryBuilder);
+//        queryEngineer.makeQuery();
+//        Query query1 = queryEngineer.getQuery();
+//        System.out.println(query1);
+
+        Order order = new JacksonMapper().readValue(Paths.get(""+"src/main/resources/order.json").toFile() , Order.class);
+
+        for(Query2 q : query2List){
+            System.out.format("%s is %sMatched when ran on %s \n", q, order.performActionIsMatch(q) ? "" : "NOT ", order);
+        }
+
+        //Order order = myJacksonMAPPER.readValue(orderStringJson, Order.class);
+
+//        System.out.format("%s is %s Matched when ran on %s \n", query1, order.performActionIsMatch(query1) ? "" : "NOT", order);
+//        System.out.format("%s is %sMatched when ran on %s \n", query2, order.performActionIsMatch(query2) ? "" : "NOT ", order);
+//        System.out.format("%s is %sMatched when ran on %s \n", query3, order.performActionIsMatch(query3) ? "" : "NOT ", order);
+
 }
 
 }

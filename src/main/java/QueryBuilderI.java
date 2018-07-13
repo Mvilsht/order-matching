@@ -4,7 +4,7 @@ public interface QueryBuilderI {
 
     public void buildQueryPattern();
 
-    public void buildQueryAction();;
+    public void buildQueryAction();
 
     public Query getQuery();
 }

@@ -1,6 +1,6 @@
 public class ContainQueryBuilder implements QueryBuilderI{
 
-    Query query;
+    private final Query query;
 
     public ContainQueryBuilder(){
         this.query = new Query();
@@ -18,7 +18,8 @@ public class ContainQueryBuilder implements QueryBuilderI{
 
     @Override
     public void buildQueryAction() {
-        query.setQAction("Contains");   // TODO here type specific comparator?
+        //build specific comparator
+        query.setQAction(QACTION.CONTAINS);   // TODO here type specific comparator?
     }
 
     @Override

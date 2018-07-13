@@ -5,7 +5,6 @@ public interface QueryPlanI {
 
     public void setQPattern(String qPattern);
 
-    public void setQAction(String qAction);
-
+    public void setQAction(QACTION qAction);
 
 }
