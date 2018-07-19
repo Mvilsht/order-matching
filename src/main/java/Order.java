@@ -1,60 +1,82 @@
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class Order implements OrderI{
-
-    @JsonProperty("total_price")   private String price;
+    @JsonProperty("total_price")   private Double price;
     @JsonProperty("email")         private String email;
+    @JsonProperty("obj1")          private OBJ1 obj;
 
     @JsonCreator
-    public Order(@JsonProperty("total_price") String price,
-                 @JsonProperty("email") String email)
+    public Order(@JsonProperty("total_price") Double price,
+                 @JsonProperty("email") String email,
+                 @JsonProperty("obj1") OBJ1 obj
+                 )
+
     {
         this.price = price;
         this.email = email;
+        this.obj = obj;
     }
 
     //Order Action performs this query by running its action, on order setParam value VS query setPattern to be queried
-    public boolean performActionIsMatch(Query2 query) throws Exception{
+    @Override
+    public boolean isQueryMatch(QueryableI query) throws Exception{
         System.out.println("performing action on " + query);
 
-        Comparator<String> queryComparator = ComparatorFactory.createComparator(query.getQAction());
+        Comparator queryComparator = ComparatorFactory.createComparator(query.getQAction());
 
-        String paramValue = getValueOfParam(query.getQParamName());
-
-        return queryComparator.compare(paramValue, query.getQPattern()) == 0;   //0 is true
+        // todo - can generalize this "Object" to T and if really needed by passing the Class of Query.class type creating with
+        // T elem = cls.newInstance(); and returning it !
+        Object orderParamValue = getValueOfParam(query.getQParamName());
+        //List<String> orderParamValue = getListValueOfParam(query.getQParamName());
+        System.out.println("o value as Object " + orderParamValue);
+        System.out.println("o value getClass() " + orderParamValue.getClass());
+        System.out.println("q value as T " + query.getQValue());
+        System.out.println("q value getClass() " + query.getQValue().getClass());
+        return queryComparator.compare(orderParamValue, query.getQValue()) == 0;   //0 is true
 
     }
 
-    //todo try finding a better way
-     private String getValueOfParam(String paramName) throws IllegalAccessException{
+    @Override
+    public boolean isCompositeQueryMatch(List<QueryableI> queries) throws Exception {
+        for (QueryableI q : queries) {
+            if (!isQueryMatch(q))
+                return false;
+        }
+        return true;
+    }
 
-         String returnValue = null;
-         for (Field f : Order.class.getDeclaredFields()) {
-             //System.out.println("f.getName() " + f.getName());    //if want to access according actual field name
-             JsonProperty annotation = f.getAnnotation(JsonProperty.class);
-             if (annotation != null) {
-                 //System.out.println("AV " + annotation.value());
-                 if (annotation.value().equals(paramName)){
-                     System.out.format("found AV for %s it's %s\n ",annotation.value(), f.get(this));
-                     returnValue = (String) f.get(this);    //value null is not valid - should be ""
-                     break;
-                 }
-             }
-         }
 
-         //param not found
-         if(returnValue == null) {
-             System.err.format("Query param %s don't exist in %s\n ",paramName, this );
-             throw new IllegalAccessException("Query param '" + paramName + "' don't exist in " + this);
-         }
+    private Object getValueOfParam(String paramName) throws Exception{
+        Object returnValue = null;
+        for (Field f : Order.class.getDeclaredFields()) {
+            //System.out.println("f.getName() " + f.getName());    //if want to access according actual field name
+            JsonProperty annotation = f.getAnnotation(JsonProperty.class);
+            if (annotation != null) {
+                //System.out.println("AV " + annotation.value());
+                if (annotation.value().equals(paramName)){
+                    System.out.format("found AV for %s it's %s\n ",annotation.value(), f.get(this));
+                    returnValue = f.get(this);    //value null is not valid - should be ""
+                    break;
+                }
+            }
+        }
+
+        //param not found - should not happened - but this way it supports HasParamQuery
+        if(returnValue == null) {
+            System.err.format("Query param %s don't exist in %s\n ",paramName, this );
+            return Collections.emptyList();
+            //throw new IllegalAccessException("Query param '" + paramName + "' don't exist in " + this);
+        }
 
         return returnValue;
-     }
+    }
 
-//    public String getPrice() {
+//    public String getTotalPrice() {
 //        return price;
 //    }
 //
@@ -70,12 +92,15 @@ public class Order implements OrderI{
 ////        this.email = email;
 ////    }
 
+
     @Override
     public String toString() {
         return "Order{" +
-                "price=" + price +
+                "price='" + price + '\'' +
                 ", email='" + email + '\'' +
+                ", obj='" + obj + '\'' +
                 '}';
     }
-
 }
+
+//todo try finding a better way

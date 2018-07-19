@@ -1,6 +1,9 @@
+import java.util.List;
+
 public interface OrderI {
 
-    boolean performActionIsMatch(Query2 query) throws Exception;
+    boolean isQueryMatch(QueryableI query) throws Exception;
+    boolean isCompositeQueryMatch(List<QueryableI> queries) throws Exception;
 }
 
 

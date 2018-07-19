@@ -1,4 +1,7 @@
 {
-  "total_price":"193.5",
-  "email":"SEAN@gmail.com"
+  "total_price": 193.5,
+  "email":"SEAN@gmail.com",
+  "obj1" : { "name": "mv",
+             "last_name": "vil"
+          }
 }

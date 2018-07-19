@@ -1,9 +1,10 @@
-public class Query<T> implements QueryableI<T>, QueryPlanI<T>{
+
+public class ParamQuery <T> implements QueryableI<T>, QueryPlanI<T>{
 //this is the product we are building
 
     private String qParamName;
-    private T qValue;
     private QACTION qAction;
+    private T qValue;
 
     @Override
     public void setQParamName(String qParamName) {
@@ -36,14 +37,12 @@ public class Query<T> implements QueryableI<T>, QueryPlanI<T>{
         return qAction;
     }
 
-
     @Override
     public String toString() {
-        return "Query{" +
+        return "ParamQuery{" +
                 "qParamName='" + qParamName + '\'' +
-                ", qValue='" + qValue + '\'' +
                 ", qAction=" + qAction +
                 '}';
     }
-
 }
+

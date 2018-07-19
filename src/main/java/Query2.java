@@ -6,9 +6,9 @@ public class Query2 implements QueryPlan2I{
 
     public static class Builder {
 
-        private final QACTION qAction;
         private String qParamName;
         private String qPattern;
+        private final QACTION qAction;
 
         public Builder(QACTION qAction) {
             this.qAction = qAction;

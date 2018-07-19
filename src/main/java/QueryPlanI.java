@@ -1,10 +1,16 @@
 
-public interface QueryPlanI {
+public interface QueryPlanI<T> {
 
-    public void setQParamName(String fieldName);
+     void setQParamName(String fieldName);
 
-    public void setQPattern(String qPattern);
+     void setQValue(T qValue);
 
-    public void setQAction(QACTION qAction);
+     void setQAction(QACTION qAction);
+
+//     String getQParamName();
+//
+//     String getQValue();
+//
+//     QACTION getQAction();
 
 }

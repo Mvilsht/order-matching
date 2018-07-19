@@ -1,23 +1,37 @@
 public class QueryEngineer {
+    //Constructs Query objects using the QueryBuilder interface
 
-    QueryBuilderI queryBuilder;
+    private QueryBuilderI queryBuilder;
 
     public QueryEngineer(QueryBuilderI queryBuilder) {
         this.queryBuilder = queryBuilder;
     }
 
-    public Query getQuery(){
-        return queryBuilder.getQuery();
+     void constructQuery(){
+        queryBuilder.buildQuery();
+        queryBuilder.setQueryParamName();
+        queryBuilder.setQueryValue();
+        queryBuilder.setQueryAction();
+
+        //return queryBuilder.getQuery();
     }
+//
+//
+//    void constructComplexQuery(){
+//        queryBuilder.buildQuery();
+//        queryBuilder.setQueryParamName();
+//        queryBuilder.setQueryValue();
+//        queryBuilder.setQueryAction();
+//
+//        //return queryBuilder.getQuery();
+//    }
 
     // Execute the methods specific to the QueryBuilder
-    // that implements QueryBuilder (ContainQueryBuilder)
+    // that implements QueryBuilder (QueryBuilder)
 
-    public void makeQuery(){
-        queryBuilder.buildQueryParamName();
-        queryBuilder.buildQueryPattern();
-        queryBuilder.buildQueryAction();
-    }
+//    public void makeQuery(){
+//
+//    }
 
 
 }
