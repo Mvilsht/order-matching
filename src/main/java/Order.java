@@ -103,4 +103,3 @@ public class Order implements OrderI{
     }
 }
 
-//todo try finding a better way
